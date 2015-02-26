@@ -1,0 +1,66 @@
+**UNIT 4 CLIENT TESTING**
+========================
+
+-------Welcome------
+Input your command:
+1 to create model
+2 to configure model
+3 to quit
+--------------------
+1
+#Please input the property file name:
+prius.property
+[Server Info] New Model Created Successfully
+
+-------Welcome------
+Input your command:
+1 to create model
+2 to configure model
+3 to quit
+--------------------
+2
+#Here are all available models:
+Prius	
+#Please choose a model:
+Prius
+#Configuration Opitons for Prius:
+Make: Toyota
+Model: Prius
+Base Price: $100000.0
+
+Transmission:
+    -Manual: $0.0
+    -Automatic: $1000.0
+
+Brakes:
+    -Regular: $0.0
+    -ABS: $500.0
+
+#Enter your choice for Transmission:
+1 for Manual
+2 for Automatic
+1
+#Enter your choice for Brakes:
+1 for Regular
+2 for ABS
+2
+#[Done]Option Set Successfully!
+
+#Here is your car's information: 
+Model: Prius
+Make: Toyota
+Base Price: 100000.0
+Transmission:
+-Manual: $0.0
+Brakes:
+-ABS: $500.0
+Totoal Price: 100500.0
+
+-------Welcome------
+Input your command:
+1 to create model
+2 to configure model
+3 to quit
+--------------------
+3
+#Bye.

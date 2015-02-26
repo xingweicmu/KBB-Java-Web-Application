@@ -1,0 +1,12 @@
+**UNIT 4 SERVER TESTING**
+========================
+Server Established on port 9000
+New Connection established at Sat Feb 21 12:10:45 PST 2015
+Received command: 1
+Prius
+New Model Created!
+Received command: 2
+Model List Sent!
+Requested model has been sent!
+Received command: 3
+Client exited!
