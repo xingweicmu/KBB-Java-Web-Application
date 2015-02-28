@@ -45,7 +45,7 @@ public class DefaultSocketClient extends Thread implements
 			line = (String) objectInputStream.readObject();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return line;
 	}
@@ -135,7 +135,7 @@ public class DefaultSocketClient extends Thread implements
 				break;
 			switch (command) {
 			case "1":
-				// Receive Property object 
+				// Receive Property object
 				receivePropertyObject();
 				System.out.println("New Model Created!");
 				// Send back response
