@@ -1,11 +1,8 @@
 package client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Properties;
 import java.util.Scanner;
@@ -34,19 +31,21 @@ public class DefaultSocketClient implements SocketClientConstants,
 		}
 	}
 
+	/**
+	 * Set up connection with server and initialize input/output stream.
+	 */
 	@Override
 	public boolean openConnection() {
 		try {
 			socket = new Socket(strHost, iPort);
+			objectOutputStream = new ObjectOutputStream(
+					socket.getOutputStream());
+			objectInputStream = new ObjectInputStream(socket.getInputStream());
+
 		} catch (IOException socketError) {
 			if (DEBUG)
 				System.err.println("Unable to connect to " + strHost);
 			return false;
-		}
-		try {
-			objectOutputStream = new ObjectOutputStream(
-					socket.getOutputStream());
-			objectInputStream = new ObjectInputStream(socket.getInputStream());
 
 		} catch (Exception e) {
 			if (DEBUG)
@@ -57,6 +56,9 @@ public class DefaultSocketClient implements SocketClientConstants,
 		return true;
 	}
 
+	/**
+	 * Handle the communication with server.
+	 */
 	@Override
 	public void handleSession() {
 		CarModelOptionIO carModelIO = new CarModelOptionIO();
@@ -98,13 +100,13 @@ public class DefaultSocketClient implements SocketClientConstants,
 					if (receiveSelectedModel() != null) {
 						// Configure the model
 						selectCarOption.configureAudo(auto);
-					}
-					else{
-						System.out.println("#Model Not Found! Please enter the right name.");
+					} else {
+						System.out
+								.println("#Model Not Found! Please enter the right name.");
 					}
 				}
 				break;
-				
+
 			case "4":
 				// List all models
 				System.out.println("#Here are all available models:");
@@ -115,12 +117,13 @@ public class DefaultSocketClient implements SocketClientConstants,
 					String modelName = input.nextLine();
 					// Send selected model Name to server
 					sendSelectedModelName(modelName);
-					// Receive response from the server and check if deleted successfully
+					// Receive response from the server and check if deleted
+					// successfully
 					if (receiveIfDeleted().equals("true")) {
 						System.out.println("#Model deleted successufully!");
-					}
-					else{
-						System.out.println("#Model Not Found! Please enter the right name.");
+					} else {
+						System.out
+								.println("#Model Not Found! Please enter the right name.");
 					}
 				}
 				break;
@@ -131,22 +134,30 @@ public class DefaultSocketClient implements SocketClientConstants,
 		System.out.println("#Bye.");
 
 	}
-	
-	public String receiveIfDeleted(){
+
+	/**
+	 * Receive response on whether auto has been deleted.
+	 * @return String the response
+	 */
+	public String receiveIfDeleted() {
 		String result = "";
 		try {
 			result = (String) objectInputStream.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (DEBUG)
-				System.out.println("Error in receiving result from "
-						+ strHost + ":" + iPort);
+				System.out.println("Error in receiving result from " + strHost
+						+ ":" + iPort);
 
 		}
 		return result;
 	}
 
-	private Automobile receiveSelectedModel() {
+	/**
+	 * Receive the selected auto object from the server.
+	 * @return Automobile the auto
+	 */
+	public Automobile receiveSelectedModel() {
 		try {
 			auto = (Automobile) objectInputStream.readObject();
 		} catch (Exception e) {
@@ -159,10 +170,13 @@ public class DefaultSocketClient implements SocketClientConstants,
 		return auto;
 	}
 
-	private void sendSelectedModelName(String modelName) {
+	/**
+	 * Send selected model name to server.
+	 * @param modelName the model name
+	 */
+	public void sendSelectedModelName(String modelName) {
 
 		try {
-			// textWriter.println(modelName);
 			objectOutputStream.writeObject(modelName);
 		} catch (Exception e) {
 			if (DEBUG)
@@ -170,10 +184,13 @@ public class DefaultSocketClient implements SocketClientConstants,
 		}
 	}
 
-	private String receiveAllModelNames() {
+	/**
+	 * Receive all the model names from the server.
+	 * @return String the response
+	 */
+	public String receiveAllModelNames() {
 		String response = "";
 		try {
-			// response = textReader.readLine();
 			response = (String) objectInputStream.readObject();
 			System.out.println(response);
 		} catch (Exception e) {
@@ -184,6 +201,10 @@ public class DefaultSocketClient implements SocketClientConstants,
 		return response;
 	}
 
+	/**
+	 * Send Property Object to the server.
+	 * @param props the Properties object
+	 */
 	public void sendPropertyObject(Properties props) {
 		try {
 			objectOutputStream.writeObject(props);
@@ -193,10 +214,12 @@ public class DefaultSocketClient implements SocketClientConstants,
 		}
 	}
 
+	/**
+	 * Receive response from the server.
+	 */
 	public void receiveResponse() {
 		String response = "";
 		try {
-			// response = textReader.readLine();
 			response = (String) objectInputStream.readObject();
 			System.out.println(response);
 		} catch (Exception e) {
@@ -206,9 +229,12 @@ public class DefaultSocketClient implements SocketClientConstants,
 		}
 	}
 
+	/**
+	 * Send command to the server.
+	 * @param command the command to be sent
+	 */
 	public void sendCommand(String command) {
 		try {
-			// textWriter.println(command);
 			objectOutputStream.writeObject(command);
 		} catch (Exception e) {
 			if (DEBUG)
@@ -217,11 +243,12 @@ public class DefaultSocketClient implements SocketClientConstants,
 
 	}
 
+	/**
+	 * Close the connection and clear up input/output stream.
+	 */
 	@Override
 	public void closeSession() {
 		try {
-			// textReader = null;
-			// textWriter = null;
 			objectInputStream.close();
 			objectOutputStream.close();
 			socket.close();
@@ -229,7 +256,6 @@ public class DefaultSocketClient implements SocketClientConstants,
 			if (DEBUG)
 				System.err.println("Error closing socket to " + strHost);
 		}
-
 	}
 
 	public void setHost(String strHost) {

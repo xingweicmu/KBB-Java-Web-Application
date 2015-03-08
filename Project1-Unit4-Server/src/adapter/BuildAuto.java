@@ -2,7 +2,7 @@ package adapter;
 
 /**
  * BuildAuto extends ProxyAutomobile and implements CreateAuto, UpdateAuto, and
- * FixAuto interfaces.
+ * FixAuto, EditThread, AutoServer, DeleteAuto interfaces.
  * 
  * @author Xing Wei
  * 

@@ -1,0 +1,87 @@
+**UNIT 6 SERVER TESTING**
+========================
+Schema Created Successfully with File sql/create_database.sql
+Table Created Successfully with File sql/auto.sql
+Table Created Successfully with File sql/optionset.sql
+Table Created Successfully with File sql/auto_optionset.sql
+Table Created Successfully with File sql/option.sql
+Table Created Successfully with File sql/optionset_option.sql
+
+[TEST INSERTING...]
+Model 'SSS' was successfully added to DB.
+Make: Ford
+Model: SSS
+Base Price: $100000.0
+
+Color:
+    -Fort Knox Gold Clearcoat Metallic: $0.0
+    -Liquid Grey Clearcoat Metallic: $0.0
+    -Infra-Red Clearcoat: $0.0
+    -Grabber Green Clearcoat Metallic: $0.0
+    -Sangria Red Clearcoat Metallic: $0.0
+    -French Blue Clearcoat Metallic: $0.0
+    -Twilight Blue Clearcoat Metallic: $0.0
+    -CD Silver Clearcoat Metallic: $0.0
+    -Pitch Black Clearcoat: $0.0
+    -Cloud 9 White Clearcoat: $0.0
+
+Transmission:
+    -automatic: $0.0
+    -manual: $-815.0
+
+Brakes/Traction Control:
+    -standard: $0.0
+    -ABS: $400.0
+    -ABS with Advance Trac: $1625.0
+
+Side Impact Air Bags:
+    -none: $0.0
+    -selected: $350.0
+
+Power Moonroof:
+    -none: $0.0
+    -selected: $595.0
+
+
+[TEST REMOVING...]
+Model 'SSS' was successfully deleted from DB.
+
+[TEST UPDATING...]
+Model 'SSS' was successfully added to DB.
+Model 'SSS' was successfully updated to DB.
+
+[AFTER UPDATING...]
+Make: Ford
+Model: SSS
+Base Price: $100000.0
+
+Color:
+    -Fort Knox Gold Clearcoat Metallic: $0.0
+    -Liquid Grey Clearcoat Metallic: $0.0
+    -Infra-Red Clearcoat: $0.0
+    -Grabber Green Clearcoat Metallic: $0.0
+    -Sangria Red Clearcoat Metallic: $0.0
+    -French Blue Clearcoat Metallic: $0.0
+    -Twilight Blue Clearcoat Metallic: $0.0
+    -CD Silver Clearcoat Metallic: $0.0
+    -Pitch Black Clearcoat: $0.0
+    -Cloud 9 White Clearcoat: $0.0
+
+Transmission:
+    -automatic: $1000.0
+    -manual: $-815.0
+
+Brakes/Traction Control:
+    -standard: $0.0
+    -ABS: $400.0
+    -ABS with Advance Trac: $1625.0
+
+Side Impact Air Bags:
+    -none: $0.0
+    -selected: $350.0
+
+Power Moonroof:
+    -none: $0.0
+    -selected: $595.0
+
+
