@@ -2,8 +2,10 @@ package adapter;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 
+import db.DBDeleteAuto;
+import db.DBInsertAuto;
+import db.DBUpdateAuto;
 import exception.AutoException;
 import util.AutoBuilder;
 import model.Automobile;
@@ -27,6 +29,7 @@ public abstract class ProxyAutomobile {
 
 		autos.get(modelName).updateOptionPrice(optionSetName, optionName,
 				newPrice);
+		updateAuto(modelName, optionSetName, optionName, newPrice);
 
 	}
 
@@ -34,15 +37,21 @@ public abstract class ProxyAutomobile {
 		boolean fixed = false;
 		AutoBuilder autoBuilder = new AutoBuilder();
 		try {
-			autos.put(modelName, autoBuilder.buildAutoObject(filename));
+			if (!autos.containsKey(modelName)) {
+				autos.put(modelName, autoBuilder.buildAutoObject(filename));
+				insertAuto(autos.get(modelName));
+			}
 		} catch (AutoException e) {
 			e.fix();
 			fixed = true;
 		}
 		if (fixed) {
 			try {
-				autos.put(modelName,
-						autoBuilder.buildAutoObject(filename + "_fixed"));
+				if (!autos.containsKey(modelName)) {
+					autos.put(modelName,
+							autoBuilder.buildAutoObject(filename + "_fixed"));
+					insertAuto(autos.get(modelName));
+				}
 			} catch (AutoException e) {
 				e.fix();
 			}
@@ -104,30 +113,61 @@ public abstract class ProxyAutomobile {
 		System.out.println("[System Info]New Option Set Added!");
 
 	}
-	
-	public void addOption(String modelName, String optionSetName, String optionName){
+
+	public void addOption(String modelName, String optionSetName,
+			String optionName) {
 		autos.get(modelName).addOption(optionSetName, optionName);
 	}
-	public void deleteOption(String modelName, String optionSetName, String optionName){
+
+	public void deleteOption(String modelName, String optionSetName,
+			String optionName) {
 		autos.get(modelName).deleteOption(optionSetName, optionName);
 	}
-	
-	public void buildCarFromProperties(String modelName, Automobile auto){
-		autos.put(modelName, auto);
-	}
-	public String printAllModelName(){
-		Iterator<String> iterator = autos.keySet().iterator();
-		StringBuilder sb = new StringBuilder();
-		while(iterator.hasNext()){
-			sb.append(iterator.next());
-			sb.append("\t");
+
+	public void buildCarFromProperties(String modelName, Automobile auto) {
+		if (!autos.containsKey(modelName)) {
+			autos.put(modelName, auto);
+			insertAuto(auto);
 		}
-		return sb.toString();
 	}
-	public Automobile getSelectedAuto(String modelName){
+
+	public String printAllModelName() {
+		Iterator<String> iterator = autos.keySet().iterator();
+		String sb = "";
+		while (iterator.hasNext()) {
+			sb += (iterator.next());
+			sb += ("\t");
+		}
+		return sb;
+	}
+
+	public Automobile getSelectedAuto(String modelName) {
 		Automobile auto = autos.get(modelName);
 		return auto;
 	}
 
+	public void insertAuto(Automobile auto) {
+		DBInsertAuto insertAuto = new DBInsertAuto("JSPHDEV");
+		insertAuto.insertAuto(auto);
+	}
 
+	public boolean removeAuto(String modelName) {
+		if (autos.containsKey(modelName)) {
+			autos.remove(modelName);
+			deleteAuto(modelName);
+			return true;
+		} else
+			return false;
+	}
+
+	public void deleteAuto(String modelName) {
+		DBDeleteAuto deleteAuto = new DBDeleteAuto("JSPHDEV");
+		deleteAuto.deleteAuto(modelName);
+	}
+
+	public void updateAuto(String modelName, String optionsetName,
+			String optionName, float newPrice) {
+		DBUpdateAuto update = new DBUpdateAuto("JSPHDEV");
+		update.updateOptionPrice(modelName, optionsetName, optionName, newPrice);
+	}
 }
